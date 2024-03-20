@@ -1,0 +1,58 @@
+OUTPUT_DIR: C:/Users/19805/Desktop/AAADepressionDetection/models/LRT_SMP_daic_new/
+SAVE_CONFIG_NAME: daic.yaml
+CKPTS_DIR: C:/Users/19805/Desktop/AAADepressionDetection/models/ckpts_new/
+TYPE: LRT_SMP_daic_new
+MANUAL_SEED: 42
+LOG_TITLE: Depression Detection with Clipped_Audio(Mel), Conv-BiLSTM-1D, PHQ-Score, CrossEntropy with weights, ASAM # TODO
+
+DATA:
+  TRAIN_ROOT_DIR: D:/daicwoz/audiofile_daic/train/
+  SMP_ROOT_DIR: D:/daicwoz/audiofile_daic/smp/mel-spectrogram/
+  TEST_ROOT_DIR: D:/daicwoz/audiofile_daic/test/
+  USE_MEL_SPECTROGRAM: True
+  USE_MFCC: False
+  PADDING:
+  RESCALE_SIZE:
+  CROP_SIZE:
+  BATCH_SIZE: 32 # TODO
+  NUM_WORKERS: 0  # TODO
+
+MODEL:
+  PHQ_THRESHOLD: 14
+  EPOCHS: 19
+  WEIGHTS:
+    TYPE: other        # ['new', 'last', 'absolute_path', others custom_type]
+    DATE:
+    PATH: model_weights
+    NAME: AVT+ConvBiLSTM+PHQ-Subscores+Attention.pt
+    CUSTOM_ABSOLUTE_PATH: 
+    INCLUDED: ['audio_net', 'evaluator']
+  AUDIO_NET:
+    INPUT_DIM: 80
+    CONV_HIDDEN: 256
+    LSTM_HIDDEN: 256
+    OUTPUT_DIM: 256
+    NUM_LAYERS: 4
+    ACTIVATION: relu  # ['sigmoid', 'softmax', 'global', else]
+    NORM: bn          # ['bn', 'wn']: nn.BatchNorm1d, nn.utils.weight_norm
+    DROPOUT: 0.5
+  EVALUATOR:
+    PREDICT_TYPE: phq-binary    # ['phq-subscores', 'phq-score', 'phq-binary']
+    INPUT_FEATURE_DIM: 256
+    CLASSES_RESOLUTION: 2 
+    N_CLASSES: 2
+    N_SUBSCORES: 1
+    STD: 5
+  CRITERION:
+    USE_SOFT_LABEL: False
+    USE_WEIGHTS: False
+  OPTIMIZER:
+    LR: 5e-4
+    WEIGHT_DECAY: 1e-4
+    USE_SAM: False
+  SCHEDULER:
+    STEP_SIZE: 5
+    GAMMA: 0.9
+    
+
+
