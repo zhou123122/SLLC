@@ -184,13 +184,13 @@ def main(dataloaders, datloaders_smp, audio_net, base_logger, writer, config, ar
             log_and_print(base_logger, '  Output Scores:')
 
             # confusion matrix
-            [[tp, fp], [fn, tn]] = standard_confusion_matrix(phq_binary_gt, phq_binary_pred)
+            [[tn, fp], [fn, tp]] = standard_confusion_matrix(phq_binary_gt, phq_binary_pred)
 
             msg = (f'  - Confusion Matrix:\n'
                    '    -----------------------\n'
-                   f'    | TP: {tp:4.0f} | FP: {fp:4.0f} |\n'
+                   f'    | TN: {tn:4.0f} | FP: {fp:4.0f} |\n'
                    '    -----------------------\n'
-                   f'    | FN: {fn:4.0f} | TN: {tn:4.0f} |\n'
+                   f'    | FN: {fn:4.0f} | TP: {tp:4.0f} |\n'
                    '    -----------------------')
             log_and_print(base_logger, msg)
 
